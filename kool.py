@@ -1,15 +1,15 @@
 import pickle
 import colorama
 import ascii_magic
-ANKOR = ascii_magic.from_image_file("C:\\Users\\ankor\\Desktop\\python programs\\1.webp",columns=80,char="@")
-ascii_magic.to_terminal(ANKOR)
-
-
+import pyfiglet
+from pyfiglet import figlet_format
 from colorama import Fore, Back,Style,init
 colorama.init()
 
+print( figlet_format ("BLOOD B. RECORDS" , font = "cybermedium"))
 
-
+ANKOR = ascii_magic.from_image_file("C:\\Users\\ankor\\Desktop\\python programs\\1.webp",columns=80,char="@")
+ascii_magic.to_terminal(ANKOR)
 
 #----------APPEND FUNCTION-------(to add patient info)-------------
 
@@ -79,16 +79,16 @@ def read():
 #------------ALL done (working)-----------------------------------------------------------------------
 def search():
     try:
-        f=open("ankurkanaujia.dat",'rb')                          #variable (s,f,i,n,p,and m )are in use please use another one
-        s=pickle.load(f)
+        f=open("ankurkanaujia.dat",'rb')                               #variable (s,f,i,n,p,and m )are in use please use another one
+        s=pickle.load(f) 
         print('---------------------------------------------------------------------------|\n')
-        print("if you want to search from donar's name then press n ")
+        print("if you want to search using donar's name then press n ")
         print('---------------------------------------------------------------------------|\n')
-        print("if you want to search from donars number then press m")
+        print("if you want to search using donars number then press m")
         print('---------------------------------------------------------------------------|\n')
-        print("if you want to search from donars phone number then press p")
+        print("if you want to search using donars phone number then press p")
         print('---------------------------------------------------------------------------|\n')
-        print("if you want to search from donars alternative phone number then press ap")
+        print("if you want to search using donars alternative phone number then press ap")
         print('---------------------------------------------------------------------------|\n')
         xx1=input()
         
@@ -197,36 +197,38 @@ def search():
 #-------------------UPDATE FUNCTION ---------------------------
 
 def update():
-    found=0#------------------------------------to update name
-    g= open("ankurkanaujia.dat",'rb+')
-    s=pickle.load(g)
-    xx3=input("ENTER DONOR NO. OF PATIENT TO UPDATE NAME")
-    for i in s:
-        if xx3==i[2]:
-            print("CURRENT NAME OF THIS GUY:",i[0])
-            i[0]=str(input("ENTER NEW NAME ="))
-            found=1
-            break
-    if found==0:
-        print("record not found .")
-        xx30=input("want to update name of another patient press 'z'")
-        if xx30=='z':
-            update()
+    try:
+        found=0                                                              #------------------------------------to update name
+        g= open("ankurkanaujia.dat",'rb+')
+        s=pickle.load(g)
+        xx3=input("ENTER DONOR NO. OF PATIENT TO UPDATE NAME")
+        for i in s:
+            if xx3==i[2]:
+                print("CURRENT NAME OF THIS GUY:",i[0])
+                i[0]=str(input("ENTER NEW NAME ="))
+                found=1
+                break
+        if found==0:
+            print("record not found .")
+            xx30=input("want to update name of another patient press 'z'")
+            if xx30=='z':
+                update()
+            else:
+                print("you press wrong key call 'update()' func. manually to do so")
         else:
-            print("you press wrong key call 'update()' func. manually to do so")
-    else:
-        g.seek(0)
-        pickle.dump(s,g)
-    g.close()
-    print("RECORD UPDATED SUCCESFULLY \nNOW YOU'RE REDIRECTED TO MAIN MENU")
-    menu()
-
+            g.seek(0)
+            pickle.dump(s,g)
+        g.close()
+        print("RECORD UPDATED SUCCESFULLY \nNOW YOU'RE REDIRECTED TO MAIN MENU")
+        menu()
+    except Exception :
+        print("OUR PROGRAM GET CRASHED  DUE TO SOME REASON (next time we will try to fix it)")
 
 
 
 
 def update1():
-    found=0#to update bloodgroup type
+    found=0                                                                                       #to update bloodgroup type
     g= open("ankurkanaujia.dat",'rb+')
     s=pickle.load(g)
     xx3=str(input("ENTER DONOR NO. OF PATIENT TO UPDATE BLOOD GROUP TYPE"))
@@ -253,7 +255,7 @@ def update1():
 
 
 def update2():
-    found=0#to update donar number
+    found=0                                                           #to update donar number
     g= open("ankurkanaujia.dat",'rb+')
     s=pickle.load(g)
     xx3=str(input("ENTER OLDER DONOR NO. OF PATIENT TO UPDATE NEW ONE"))
@@ -310,117 +312,134 @@ def update3():
 #---------------------menu function__________________________________
 
 def menu():
-    print()
-    print(Fore.RED + "TO MAINTAIN BLOOD BANK DATA THIS PROGRAM OFFERS VARIETY OF FEATURES LISTED BELOW.")
-    print()
-    print(Fore.YELLOW + "==============================================================================")
-    print(Fore.GREEN+ "TO ADD PATIENT INFORMATION TYPE 'info'    or   '1'                            | ")
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
-    print(Fore.MAGENTA + "TO SEARCH PATIENT INFORMATION TYPE 'search'  or  '2'                          | ")
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
-    print(Fore.YELLOW + "TO  UPDATE EXISTING INFORMATION TYPE 'update' or  '3'                         |")
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
+    try:
+        print()
+        print(Fore.RED + "TO MAINTAIN BLOOD BANK DATA THIS PROGRAM OFFERS VARIETY OF FEATURES LISTED BELOW.")
+        print()
+        print(Fore.YELLOW + "==============================================================================")
+        print(Fore.GREEN+ "| TO ADD RECORD      -->      TYPE 'info'    or  PRESS '1'                     | ")
+        print(Fore.CYAN + '|------------------------------------------------------------------------------|')
+        print(Fore.MAGENTA + "| TO SEARCH RECORDS     -->      TYPE 'search'  or  PRESS '2'                  | ")
+        print(Fore.CYAN + '|------------------------------------------------------------------------------|')
+        print(Fore.YELLOW + "| TO  UPDATE RECORDS         -->      TYPE 'update' or  PRESS '3'              |")
+        print(Fore.CYAN + '|------------------------------------------------------------------------------|')
 
-    print(Fore.GREEN + "IF YOU WANT TO READ EXSISTING RECORD TYPE 'rr' or '4'                         |")
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
-    print(Fore.RED + "IF YOU WANT TO GO THROUGH ALL ABOVE FUNCTIONS THEN TYPE 'all' or '5'          |")
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
-    print(Fore.YELLOW + "IF YOU WANT ABOVE MENU AGAIN THEN TYPE  'menu()' ANYWHERE                     |"                )
+        print(Fore.GREEN + "| WANT TO READ EXSISTING RECORDS -->TYPE 'rr' or PRESS '4'                     |")
+        print(Fore.CYAN + '|------------------------------------------------------------------------------|')
+        print(Fore.RED + "| IF YOU WANT TO GO THROUGH ALL ABOVE FUNCTIONS THEN TYPE 'all' or PRESS '5'   |")
+        print(Fore.CYAN + '|------------------------------------------------------------------------------|')
+        print(Fore.YELLOW + "| PRESS '6' IF YOU WANT TO LEARN SOMETHING NEW                                 |"                )
 
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
-    print(Fore.CYAN + "TIP:- You can update patient records by using donor number only.              |")
-    print(Fore.CYAN + "TIP:- You need to add patient info before trying search or update function.   |")
-    print(Fore.CYAN + "TIP:- Delete old records by  typing 'delete' if you want to start Fresh with. |")
-    
-    print(Fore.CYAN + '______________________________________________________________________________|')
-    xux=input()
-    print(Fore.CYAN + '------------------------------------------------------------------------------|')
-
-    if xux=='info' or xux=='1' :
-        print(Fore.YELLOW + "==============================================================================")
-        Append()
-        print(Fore.RED + "DATA WAS WRITTEN SUCCESFULLY \nNOW YOU'RE REDIRECTED TO MENU AGAIN")
-        print(Fore.YELLOW + "==============================================================================")
-        menu()
-        print(Fore.YELLOW + "==============================================================================")
-
-    elif xux=='delete' or xux=='DELETE' :
-            delete()
-    elif xux=='search' or xux=='2' :
-        print(Fore.YELLOW + "==============================================================================")
-        search()
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.RED + "HOPE YOU FIND NEEDED RESULT \nNOW YOU'RE REDIRECTED TO MENU AGAIN")
-        menu()
-        print(Fore.YELLOW + "==============================================================================")
-    elif xux=='all' or xux=='5' :
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.RED + "NOW YOU ARE REDIRECTED TO ADD INFO FUNCTION ")
-        print(Fore.YELLOW + "==============================================================================")
-        Append()
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.RED + "RECORD WRITTEN SUCCESFULLY [ NEW RECORDS ARE GIVEN BELOW OF THE LIST ] ")
-        print(Fore.YELLOW + "==============================================================================")
-        read()
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.RED + "NOW YOU'RE REDIRRECTED TO SEARCH FUNCTION")
-        print(Fore.YELLOW + "==============================================================================")
-        search()
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.RED + "NOW YOU'RE REDIRRECTED TO UPDATE FUNCTION")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "THIS IS LAST FUNCTION OF THE PROGRAM BUT NOT THE LEAST ")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        needed()
+        print(Fore.CYAN + '|------------------------------------------------------------------------------|')
+        print(Fore.CYAN + "| TIP:- You can update patient records by using donor number only.             |")
+        print(Fore.CYAN + "| TIP:- You need to add patient info before trying search or update function.  |")
+        print(Fore.CYAN + "| TIP:-  wanna know eastereggs of a program type-->'easteregg'.                |")
         
-        
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        print("NOW YOU ARE REDIRECTED TO MENU")
-        menu()
+        print(Fore.CYAN + '_______________________________________________________________________________|')
+        xux=input()
+        print(Fore.CYAN + '------------------------------------------------------------------------------|')
 
-    elif xux=='rr' or xux=='4' :
-        read()
-        print(Fore.RED + "NOW YOU'RE REDIRECTED TO MENU AGAIN")
-        menu()
-    elif xux=='menu':
-        menu()                                                                                                                                      
-    elif xux=='update' or xux=='3' :
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "IF YOU WANT TO UPDATE NAME TYPE 'nn'")
-        print(Fore.RED + "IF YOU WANT TO UPDATE BLOOD GROUP TYPE 'mm'")
-        print(Fore.CYAN + "IF YOU WANT TO UPDATE DONOR NUMBER TYPE 'dn'")
-        print(Fore.MAGENTA + "IF YOU WANT TO UPDATE PHONE NUMBER TYPE 'pp'")
-        print(Fore.YELLOW + "==============================================================================")
-        print(Fore.YELLOW + "==============================================================================")
-        
-        
-        xuy=input()
-        if xuy=='nn':
-            update()
+        if xux=='info' or xux=='1' :
+            print(Fore.YELLOW + "==============================================================================")
+            Append()
+            print(Fore.RED + "DATA WAS WRITTEN SUCCESFULLY \nNOW YOU'RE REDIRECTED TO MENU AGAIN")
+            print(Fore.YELLOW + "==============================================================================")
+            menu()
+            print(Fore.YELLOW + "==============================================================================")
+
+        elif xux=='delete' or xux=='DELETE' :
+                delete()
+        elif xux=='egg' or xux=='egg' :
+                HEY_U_X()
+        elif xux=='proinfo' or xux=='PROINFO' :
+                proinfo()
+        elif xux=='easteregg' or xux=='6' :
+                smthnew()
+
+        elif xux=='search' or xux=='2' :
+            print(Fore.YELLOW + "==============================================================================")
+            search()
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.RED + "HOPE YOU FIND NEEDED RESULT \nNOW YOU'RE REDIRECTED TO MENU AGAIN")
+            menu()
+            print(Fore.YELLOW + "==============================================================================")
+        elif xux=='all' or xux=='5' :
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.RED + "NOW YOU ARE REDIRECTED TO ADD INFO FUNCTION ")
+            print(Fore.YELLOW + "==============================================================================")
+            Append()
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.RED + "RECORD WRITTEN SUCCESFULLY [ NEW RECORDS ARE GIVEN BELOW OF THE LIST ] ")
+            print(Fore.YELLOW + "==============================================================================")
+            read()
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.RED + "NOW YOU'RE REDIRRECTED TO SEARCH FUNCTION")
+            print(Fore.YELLOW + "==============================================================================")
+            search()
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.RED + "NOW YOU'RE REDIRRECTED TO UPDATE FUNCTION")
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "THIS IS LAST FUNCTION OF THE PROGRAM BUT NOT THE LEAST ")
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "==============================================================================")
+            needed()
             
-        elif xuy=='mm':
-            update1()
-        elif xuy=='dn':
-            update2()
-        elif xuy=='pp':
-            update3()
-        
+            
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "==============================================================================")
+            print("NOW YOU ARE REDIRECTED TO MENU")
+            menu()
 
-        else:
+        elif xux=='rr' or xux=='4' :
+            read()
+            print(Fore.RED + "NOW YOU'RE REDIRECTED TO MENU AGAIN")
+            menu()
+        elif xux=='menu':
+            menu()                                                                                                                                      
+        elif xux=='update' or xux=='3' :
             print(Fore.YELLOW + "==============================================================================")
-            xuz=input(Fore.RED + "oh dear may be you press wrong key \n iF you want above menu again then press ' 9'")
             print(Fore.YELLOW + "==============================================================================")
-            if xuz=="9":
+            print(Fore.YELLOW + "IF YOU WANT TO UPDATE NAME TYPE 'nn'")
+            print(Fore.RED + "IF YOU WANT TO UPDATE BLOOD GROUP TYPE 'mm'")
+            print(Fore.CYAN + "IF YOU WANT TO UPDATE DONOR NUMBER TYPE 'dn'")
+            print(Fore.MAGENTA + "IF YOU WANT TO UPDATE PHONE NUMBER TYPE 'pp'")
+            print(Fore.YELLOW + "==============================================================================")
+            print(Fore.YELLOW + "==============================================================================")
+            
+            
+            xuy=input()
+            if xuy=='nn':
                 update()
-            else :
-                print("AGAIN YOU PRESS WRONG KEY ")
+                
+            elif xuy=='mm':
+                update1()
+            elif xuy=='dn':
+                update2()
+            elif xuy=='pp':
+                update3()
+            
 
+            else:
+                print(Fore.YELLOW + "==============================================================================")
+                xuz=input(Fore.RED + "oh dear may be you press wrong key \n iF you want above menu again then press ' 9'")
+                print(Fore.YELLOW + "==============================================================================")
+                if xuz=="9":
+                    update()
+                else :
+                    print("AGAIN YOU PRESS WRONG KEY ")
+        else:
+            a=input(("MAY U PRESS WRONG KEY /PRESS '1' TO START AGAIN /otherwise use ur vocals"))
+            if a.lower()=='1':
+                menu()
+            else:
+                HEY_U_X()
+    except Exception :
+        print("OUR PROGRAM GET CRASHED  DUE TO SOME REASON (next time we will try to fix it)")
+
+    
 #____________________this is needed one ________________
 
 
@@ -477,8 +496,64 @@ def delete():
 
         
     
+def HEY_U_X():
+    print( figlet_format ('''It's funny, feel you poking at my heart
+    You said that what I say, it makes you laugh
+    How 'bout you come 'round and pick me up?
+    We joke around and talk about real stuff
+    Don't sell yourself short and
+    There's something about you
+    Can't explain
+    But I can't live without you
+    Now I want you
+    I'm sick of being alone
+    Lying 'round here
+    And you're all that I want
+    The others, they don't have the same effect
+    Don't wanna be someone who you forget
+    You sent a letter
+    And I read every word
+    Nothing feels better
+    I melted when you called
+    Don't sell yourself short and
+    There's something about you
+    Can't explain
+    But I can't live without you
+    Now I want you
+    I'm sick of being alone
+    Lying 'round here
+    And you're all that I want
+    The others, they don't have the same effect
+    Don't wanna be someone who you forget
+    Now I want you
+    I'm sick of being alone
+    Lying 'round here
+    And you're all that I want
+    The others, they don't have the same effect
+    Don't wanna be someone who you forget''' , font = "standard"))
+    print()
 
-#----------------------THIS IS FOR GUI--------------------------
+    menu()
+def smthnew():
+    print(Fore.RED + "THIS IS EATEREGGS OF THE PROGRAM")
+    print(Fore.YELLOW + "ENTER 'egg' ON START MENU TO CLEAR VOCAL")
+    print(Fore.GREEN + "ENTER 'proinfo' ON START MENU TO KNOW MORE ABOUT PROGRAM")
+    menu()   
+     
+
+def proinfo():
+    
+    print( figlet_format ('''
+    CODE WAS WRITTEN BY ANKUR KANAUJIA
+    IDEA BY RAGHAV VERMA
+    SUPPORTED BY UTTKARSH CHAWLA ''' , font = "standard"))
+    menu()
+
+
+
+
+
+#----------------------THANK U FOR NOTHING--------------------------
     
 '''print("TO MAINTAIN BLOOD BANK DATA THIS PROGRAMS OFFERS VARIETY OF FEATURES LISTED BELOW.")
 print("==================================================================")
@@ -497,7 +572,10 @@ print('-------------------------------------------------------------------------
 print("IF YOU IF I ATW LITTLE WHILE HOW LONG YOU MAZKE ME ALONE AND OPEN HEATER FOR ME CUZ I'M COLDWANT ABOVE MENU AGAIN THEN TYPE  'menu()' ANYWHERE")
 
 print('----------------------------------------------------------------------------------|')
-print("TIP:- you can update patient records by using donor number only")
+print(''TIP:- DO U WANNA GIRLFRIEND '
+                   DO U WANNA LOVER
+                   I'M CRUSHING ON A SOMEONE
+                   TO BAD IT'S UR BROTHER')
 print('----------------------------------------------------------------------------------|')
 xux=input()
 print('----------------------------------------------------------------------------------|')
@@ -511,7 +589,7 @@ elif xux=='all' or xux=='5' :
     Append()
     print("RECORD WRITTEN SUCCESFULLY APPENDED RECORDS ARE GIVEN BELOW OF THE LIST ")
     read()
-    print("NOW YOU'RE REDIRRECTED TO SEARCH FUNCTION")
+    print("NOW YOU'RE REDIRRECTED TO SEARCH FUNCTION")                                  #   HAHA HAA HAHAHA HA
     search()
     print("NOW YOU'RE REDIRRECTED TO UPDATE FUNCTION")
     update()
@@ -547,11 +625,20 @@ elif xux=='update' or xux=='3' :
 
             '''
 
+
+'''CALLING=====================>>>>'''
+
 menu()
 
 #===========================================+++++++++++++++++++++++++++++++++++++++++===============================================
-'''
-CODE WAS WRITTEN BY ((ANKUR KANAUJIA))
-IDEA BY ((RAGHAV VERMA))
-SUPPORTED BY ((UTTKARSH CHAWLA))  '''
+
+    
+
+def proinfo():
+    
+    print( figlet_format ('''
+    CODE WAS WRITTEN BY ANKUR KANAUJIA
+    IDEA BY RAGHAV VERMA
+    SUPPORTED BY UTTKARSH CHAWLA ''' , font = "standard"))
+    menu()
 
